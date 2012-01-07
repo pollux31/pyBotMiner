@@ -3,14 +3,16 @@ Debug class
 '''
 
 import logging
+from Constant import LEVEL, FILTER, BUFFER, SEND, CHUNK
 
-LEVEL = logging.DEBUG
-#LEVEL = logging.INFO
 
-FILTER = True       # Filter the packet displayed
-BUFFER = False      # display octets received
-SEND   = True      # display sent packets
-CHUNK  = True      # display the chunk information
+#LEVEL = logging.DEBUG
+##LEVEL = logging.INFO
+#
+#FILTER = True       # Filter the packet displayed
+#BUFFER = False      # display octets received
+#SEND   = True      # display sent packets
+#CHUNK  = True      # display the chunk information
 
 class Debug(object):
     

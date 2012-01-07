@@ -1,8 +1,5 @@
 '''
 Management of the Bot actions
-
-Each action is implemented in a specific class
-The action is launched by the scheduler by calling the "run" methode of the class
 '''
 
 import math
@@ -46,13 +43,12 @@ class Jump(object):
         self.bot = bot
         self.cpt=0
         self.x, self.y, self.z = self.bot.pos
-        self.stance = self.bot.stance - self.y
+
     def run(self, param):
         if self.cpt == 0:
             self.cpt = 1
-            self.bot.sendMsg(0x0B, self.x, self.y+1, self.y+2.5, self.z, True)
+            self.bot.sendMsg(0x0B, self.x, self.y+1.0, self.y+2.5, self.z, True)
         else:
-            self.cpt=0
             self.bot.sendMsg(0x0B, self.x, self.y, self.y+1.5, self.z, True)
             self.bot.removeCommand("JUMP")
         
