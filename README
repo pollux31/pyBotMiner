@@ -1,0 +1,20 @@
+pyBotMiner is a Minecraft Bot (development in progress).
+
+The aim is to interact with a user by using the chat command line.
+
+
+Currently:
+- Protocol completed : Bot is alive
+- Command are entered in the chat line. 
+	The format is: BotName command   (ex: bot lookat me)
+
+
+Current known commands :
+lookat me   - the bot is looking to you
+l           - same as lookat me
+
+
+To do:
+- Map storage
+
+
