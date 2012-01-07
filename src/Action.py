@@ -1,5 +1,8 @@
 '''
 Management of the Bot actions
+
+Each action is implemented in a specific class
+The action is launched by the scheduler by calling the "run" methode of the class
 '''
 
 import math
