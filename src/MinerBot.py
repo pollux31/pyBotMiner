@@ -174,6 +174,7 @@ class MinerBot(object):
             param = (lambda x: player if x == 'ME' else x)(cmd[1])
             action = LookAt(self, param)
         elif actionName == "J" or actionName == "JUMP":
+            actionName = "JUMP"
             action = Jump(self)
         elif actionName == "Q" or actionName == "QUIT":
             self.stop()
