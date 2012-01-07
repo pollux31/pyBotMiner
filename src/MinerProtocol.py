@@ -7,6 +7,7 @@ from Buffer import Buffer, Standard, String, BlockSlot, Window, MetaEntity, Meta
 from MinerBot import MinerBot
 from World import World
 from Debug import debug
+from Constant import BOT_NAME_NEEDED
 
 class MinerProtocol(Protocol):
     """ implementation of the Minecraft protocol """
@@ -189,12 +190,12 @@ class MinerProtocol(Protocol):
     def onTransaction(self, bot, info):
         pass 
     
-    def send(self, id, *data):
-        if id not in self.packets:
-            self.log.error("Unknown packet to send 0x%02X" % id)
+    def send(self, cmd, *data):
+        if cmd not in self.packets:
+            self.log.error("Unknown packet to send 0x%02X" % cmd)
             self.transport.loseConnection()
-        fct, pack = self.packets[id]
-        res = pack.pack(id, *data)
+        fct, pack = self.packets[cmd]
+        res = pack.pack(cmd, *data)
         deb = ""
         for x in res:
             deb += "%02X " % ord(x)
@@ -211,9 +212,13 @@ class MinerProtocol(Protocol):
         self.send(0x01, protocol_version, username, 0, 0, 0, 0, 0, 0)
    
     def onChat(self, bot, info):
+        '''
+        Chat received. Analyse it to detect a message from the player 
+        '''
         info = info[1].upper()
         if ord(info[0]) == 0xA7: #skip color code
             info = info[2:]
+        # if the message is from a player it starts with <PlayerName>
         result = re.match("<(.*)>(.*)", info)
         if result == None:
             name = ""
@@ -222,10 +227,12 @@ class MinerProtocol(Protocol):
             name = result.group(1)
             msg = result.group(2)
             result = msg.split()
-            if result[0] == bot.getName():
-                bot.parseCommand(name, result[1:])
-    
+            if BOT_NAME_NEEDED: # Command starts with the targeted Bot name
+                if result[0] == bot.getName():
+                    bot.parseCommand(name, result[1:])
+            else:
+                if name <> bot.getName():  # do not compute self message
+                    bot.parseCommand(name, result)
+                
     def onPlayerList(self, bot, info):
         bot.updatePlayerList(info[1], info[2])
-   
-       

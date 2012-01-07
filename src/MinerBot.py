@@ -168,15 +168,17 @@ class MinerBot(object):
             toStop = True
             
         if actionName == "L":
-            actionName = "LOOKAT"
-            cmd[1] = "ME"
-        if actionName == "LOOKAT":
+            param = player
+            action = LookAt(self, param)
+        elif actionName == "LOOKAT":
             param = (lambda x: player if x == 'ME' else x)(cmd[1])
             action = LookAt(self, param)
-        if actionName == "J":
-            actionName = "JUMP"
-        if actionName == "JUMP":
+        elif actionName == "J" or actionName == "JUMP":
             action = Jump(self)
+        elif actionName == "Q" or actionName == "QUIT":
+            self.stop()
+            self.sendMsg(0xFF, "Fin !!!")
+            return
         else:
             msg = "I don't understand %s" % actionName
             self.sendMsg(0x03, msg)
