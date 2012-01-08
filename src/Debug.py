@@ -91,17 +91,19 @@ class Debug(object):
         
     def send(self, cmd, *data):
         ''' To trace packet sent '''
-        if SEND:
+        if SEND and cmd <> 0x00:
             logging.debug("==> [0x%02X : %s]" % (cmd, str(data)))
 
     
-    def received(self, ident):
+    def received(self, cmd):
         ''' To trace the packets received '''
-        if ident not in self.packets:
-            logging.error("*** unknown Id packet 0x%02X" % ident)
-        elif FILTER and self.packets[ident][0] == False:
+        if cmd not in self.packets:
+            logging.error("*** unknown Id packet 0x%02X" % cmd)
+        elif FILTER and self.packets[cmd][0] == False:
             return
-        logging.debug("<== 0x%02X (%s)" %(ident, self.packets[ident][1]))
+        if cmd == 0x00 or cmd == 0x04:
+            return
+        logging.debug("<== 0x%02X (%s)" %(cmd, self.packets[cmd][1]))
         
     def chunk(self, msg):
         ''' To trace the Chunks received '''

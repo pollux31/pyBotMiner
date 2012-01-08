@@ -12,7 +12,7 @@ import logging
 LEVEL = logging.DEBUG
 #LEVEL = logging.INFO
 
-FILTER = True       # Filter the packet displayed
+FILTER = False       # Filter the packet displayed
 BUFFER = False      # display octets received
 SEND   = True      # display sent packets
 CHUNK  = True      # display the chunk information

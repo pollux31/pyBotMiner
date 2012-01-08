@@ -52,4 +52,10 @@ class Jump(object):
             self.bot.sendMsg(0x0B, self.x, self.y, self.y+1.5, self.z, True)
             self.bot.removeCommand("JUMP")
         
+class Animate(object):
+    def __init__(self, bot):
+        self.bot = bot
         
+    def run(self, param):
+        self.bot.sendMsg(0x12, self.bot.EID, param)
+        #self.bot.removeCommand("ANIMATE")

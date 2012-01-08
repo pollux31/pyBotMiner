@@ -23,64 +23,64 @@ class MinerProtocol(Protocol):
             0x01: (self.onLoginRequest, String("BiSqibbBB")),   # Login request
             0x02: (self.onHandshake, String("BS")),             # Handshake
             0x03: (self.onChat, String("BS")),                  # Chat message
-            0x04: (None, Standard("Bq")),                   # Time update 
-            0x05: (None, Standard("Bihhh")),                # Entity Equipment
+            0x04: (None, Standard("Bq")),                       # Time update 
+            0x05: (None, Standard("Bihhh")),                    # Entity Equipment
             0x06: (self.onSpawnPosition, Standard("Biii")),     # Spawn position
-            0x07: (None, Standard("Bii?")),                 # Use entity  (C --> S)
+            0x07: (None, Standard("Bii?")),                     # Use entity  (C --> S)
             0x08: (self.onUpdateHealth, Standard("Bhhf")),      # Update health
-            0x09: (None, Standard("Bbbbhl")),               # Respawn  (C --> S)
-            0x0A: (None, Standard("B?")),                   # Player  (C --> S)
-            0x0B: (None, Standard("Bdddd?")),               # Player position  (C --> S)
-            0x0C: (None, Standard("Bff?")),                 # Player look  (C --> S)
+            0x09: (None, Standard("Bbbbhl")),                   # Respawn  (C --> S)
+            0x0A: (None, Standard("B?")),                       # Player  (C --> S)
+            0x0B: (None, Standard("Bdddd?")),                   # Player position  (C --> S)
+            0x0C: (None, Standard("Bff?")),                     # Player look  (C --> S)
             0x0D: (self.onPLayerPosition, Standard("Bddddff?")), # Player position & look
-            0x0E: (None, Standard("Bbibib")),               #  Player digging  (C --> S)
-            0x0F: (None, BlockSlot("BibibW")),              # Player block placement  (C --> S)
-            0x10: (None, Standard("Bh")),                   # Holding change  (C --> S)
-            0x11: (None, Standard("Bibibi")),               # Use bed
-            0x12: (None, Standard("Bib")),                  # Animation
-            0x13: (None, Standard("Bib")),                  # Entity action  (C --> S)
+            0x0E: (None, Standard("Bbibib")),                   #  Player digging  (C --> S)
+            0x0F: (None, BlockSlot("BibibW")),                  # Player block placement  (C --> S)
+            0x10: (None, Standard("Bh")),                       # Holding change  (C --> S)
+            0x11: (None, Standard("Bibibi")),                   # Use bed
+            0x12: (None, Standard("Bib")),                      # Animation
+            0x13: (None, Standard("Bib")),                      # Entity action  (C --> S)
             0x14: (self.onNamedEntitySpawn, String("BiSiiibbh")), # Named entity spawn
-            0x15: (None, Standard("Bihbhiiibbb")),          # Pickup spawn
-            0x16: (None, Standard("Bii")),                  # Collect item
+            0x15: (None, Standard("Bihbhiiibbb")),              # Pickup spawn
+            0x16: (None, Standard("Bii")),                      # Collect item
             0x17: (self.onAddObject, Standard("Bibiiiihhh")),   # Add object/vehicle
-            0x18: (None, MetaEntity("BibiiibbE")),          # Mob spawn
-            0x19: (None, String("BiSiiii")),                # Entity: painting
-            0x1A: (None, Standard("Biiiih")),               # Experience Orb
-            0x1B: (None, Standard("Bffff??")),              # Stance update
-            0x1C: (None, Standard("Bihhh")),                # Entity velocity
-            0x1D: (None, Standard("Bi")),                   # Destroy entity
-            0x1E: (None, Standard("Bi")),                   # Entity
+            0x18: (None, MetaEntity("BibiiibbE")),              # Mob spawn
+            0x19: (None, String("BiSiiii")),                    # Entity: painting
+            0x1A: (None, Standard("Biiiih")),                   # Experience Orb
+            0x1B: (None, Standard("Bffff??")),                  # Stance update
+            0x1C: (None, Standard("Bihhh")),                    # Entity velocity
+            0x1D: (None, Standard("Bi")),                       # Destroy entity
+            0x1E: (None, Standard("Bi")),                       # Entity
             0x1F: (self.onEntityRelativeMove, Standard("Bibbb")), # Entity relative move
-            0x20: (None, Standard("Bibb")),                 # Entity look
-            0x21: (None, Standard("Bibbbbb")),              # Entity look and relative move
-            0x22: (None, Standard("Biiiibb")),              # Entity teleport
-            0x26: (None, Standard("Bib")),                  # Entity status
-            0x27: (None, Standard("Bii")),                  # Attach entity
-            0x28: (None, MetaEntity("BiE")),                # Entity metadata
-            0x29: (None, Standard("Bibbh")),                # Entity Effect
-            0x2A: (None, Standard("Bib")),                  # Remove Entity Effect
-            0x2B: (None, Standard("Bfhh")),                 # Experience
+            0x20: (None, Standard("Bibb")),                     # Entity look
+            0x21: (None, Standard("Bibbbbb")),                  # Entity look and relative move
+            0x22: (None, Standard("Biiiibb")),                  # Entity teleport
+            0x26: (None, Standard("Bib")),                      # Entity status
+            0x27: (None, Standard("Bii")),                      # Attach entity
+            0x28: (None, MetaEntity("BiE")),                    # Entity metadata
+            0x29: (None, Standard("Bibbh")),                    # Entity Effect
+            0x2A: (None, Standard("Bib")),                      # Remove Entity Effect
+            0x2B: (None, Standard("Bfhh")),                     # Experience
             0x32: (self.onPreChunk, Standard("Bii?")),          # Pre chunk
             0x33: (self.onChunk, MetaChunk()),                  # Map chunk
-            0x34: (None, BlockArray()),                     # Multi-block change
-            0x35: (None, Standard("Bibibb")),               # Block change
-            0x36: (None, Standard("Bihibb")),               # Block action
-            0x3C: (None, BlockExplosion()),                 # Explosion
-            0x3D: (None, Standard("Biibii")),               # Sound effect
-            0x46: (None, Standard("Bbb")),                  # New/invalid state
-            0x47: (None, Standard("Bi?iii")),               # Thunderbolt
-            0x64: (None, String("BbbSb")),                  # Open window
-            0x65: (None, Standard("Bb")),                   # Close window
-            0x66: (None, BlockSlot("Bbhbh?W")),             # Window click
-            0x67: (None, BlockSlot("BbhW")),                # Set slot
+            0x34: (None, BlockArray()),                         # Multi-block change
+            0x35: (None, Standard("Bibibb")),                   # Block change
+            0x36: (None, Standard("Bihibb")),                   # Block action
+            0x3C: (None, BlockExplosion()),                     # Explosion
+            0x3D: (None, Standard("Biibii")),                   # Sound effect
+            0x46: (None, Standard("Bbb")),                      # New/invalid state
+            0x47: (None, Standard("Bi?iii")),                   # Thunderbolt
+            0x64: (None, String("BbbSb")),                      # Open window
+            0x65: (None, Standard("Bb")),                       # Close window
+            0x66: (None, BlockSlot("Bbhbh?W")),                 # Window click
+            0x67: (None, BlockSlot("BbhW")),                    # Set slot
             0x68: (self.onWindowItems, Window()),               # Window items
-            0x69: (None, Standard("Bbhh")),                 # Update window property
+            0x69: (None, Standard("Bbhh")),                     # Update window property
             0x6A: (self.onTransaction, Standard("Bbh?")),       # Transaction
-            0x6B: (None, BlockSlot("BhW")),                 # Creative inventory action 
-            0x6C: (None, Standard("Bbb")),                  # Enchant Item
-            0x82: (None, String("BihiSSSS")),               # Update sign
-            0x83: (None, ByteArray()),                      # item data
-            0xC8: (None, Standard("Bib")),                  # Increment statistic
+            0x6B: (None, BlockSlot("BhW")),                     # Creative inventory action 
+            0x6C: (None, Standard("Bbb")),                      # Enchant Item
+            0x82: (None, String("BihiSSSS")),                   # Update sign
+            0x83: (None, ByteArray()),                          # item data
+            0xC8: (None, Standard("Bib")),                      # Increment statistic
             0xC9: (self.onPlayerList, String("BS?h")),          # Player List Item
             0xFF: (self.onDisconnected, String("BS")),          # Disconnect
         }
@@ -135,7 +135,7 @@ class MinerProtocol(Protocol):
         bot.setHealth(health=info[1], food=info[2], foodSaturation=info[3])
         
     def onLoginRequest(self, bot, info):
-        #bot.setUID(info[1])
+        bot.setUID(info[1])
         #bot.setMaxSeed(info[3])
         pass
     
@@ -200,6 +200,7 @@ class MinerProtocol(Protocol):
         for x in res:
             deb += "%02X " % ord(x)
         self.transport.write(res)
+        self.log.send(cmd)
     
     def sendDisconnect(self, reason):
         self.send(0xFF, "Disconnection by client")

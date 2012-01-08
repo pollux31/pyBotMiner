@@ -5,11 +5,12 @@ from twisted.internet import task
 from numpy import array
 
 from Debug import debug
-from Action import LookAt, Jump
+from Action import LookAt, Jump, Animate
 
 class MinerBot(object):
     def __init__(self, name, fctSend):
         # Bot information
+        self.EID = 0
         self.name = name
         self.fctSend = fctSend      # function to call to send a message to the server
         self.health = 0
@@ -41,6 +42,9 @@ class MinerBot(object):
 
     def getName(self):
         return self.name
+        
+    def setUID(self, uid):
+        self.EID = uid
         
     def setSpawnPosition(self, info):
         cmd, x, y, z = info
@@ -160,36 +164,43 @@ class MinerBot(object):
         #self.log.debug("Chat >>> [%s] cmd = %s" % (player, str(cmd)))
         #self.send(0x03, "ok %s, your cmd is %s" % (player, str(cmd)))
         
-        actionName = cmd[0]
         param = None
         toStop = False
-        if actionName == 'STOP':
-            actionName = cmd[1]
+        if cmd[0] == 'STOP':
+            cmd = cmd[1:]
             toStop = True
             
-        if actionName == "L":
+        action = cmd[0]
+        if action == "L":
             param = player
-            action = LookAt(self, param)
-        elif actionName == "LOOKAT":
+            do = LookAt(self, param)
+        elif action == "LOOKAT":
             param = (lambda x: player if x == 'ME' else x)(cmd[1])
-            action = LookAt(self, param)
-        elif actionName == "J" or actionName == "JUMP":
-            actionName = "JUMP"
-            action = Jump(self)
-        elif actionName == "Q" or actionName == "QUIT":
+            do = LookAt(self, param)
+        elif action == "J" or action == "JUMP":
+            action = "JUMP"
+            do = Jump(self)
+        elif action == "Q" or action == "QUIT":
             self.stop()
             self.sendMsg(0xFF, "Fin !!!")
             return
+        elif action == "A" or action == "ANIMATE":
+            action = "ANIMATE"
+            if len(cmd) == 1:
+                param = 0
+            else:
+                param = int(cmd[1])
+            do = Animate(self)
         else:
-            msg = "I don't understand %s" % actionName
+            msg = "I don't understand %s" % action
             self.sendMsg(0x03, msg)
             self.log.error(msg)
             return
         
         if toStop:
-            self.removeCommand(actionName)
+            self.removeCommand(action)
         else:
-            self.addCommand(actionName, action, param)    
+            self.addCommand(action, do, param)    
     
 
         

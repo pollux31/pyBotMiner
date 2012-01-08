@@ -95,8 +95,8 @@ class Standard(object):
         self.fmt = '>'+fmt
         self.len = calcsize(self.fmt)
         
-    def pack(self, Id, *data):
-        return pack(self.fmt, Id, *data)
+    def pack(self, cmd, *data):
+        return pack(self.fmt, cmd, *data)
 
     def unpack(self, buf):
         try:
@@ -112,8 +112,8 @@ class String(object):
     def __init__(self, fmt):
         self.fmt = fmt
         
-    def pack(self, Id, *data):
-        res = pack('B', Id)
+    def pack(self, cmd, *data):
+        res = pack('B', cmd)
         i=0
         for f in self.fmt[1:]:
             if f == 'S':
@@ -208,6 +208,23 @@ class MetaEntity(object):
 class BlockSlot(object):
     def __init__(self, fmt):
         self.fmt = fmt
+        
+    def packSlot(self, *data):
+        res = pack('!h', data[0])
+        if data[0] <> -1:
+            res += pack("!hh", data[1:])
+        return res
+
+    def pack(self, cmd, *data):
+        res = pack('B', cmd)
+        i=0
+        for f in self.fmt[1:]:
+            if f == 'W':
+                res += packSlot(data[i])
+            else:
+                res += pack('!'+f, data[i])
+            i += 1
+        return res
 
     def unpackSlot(self, buf):
         try:
